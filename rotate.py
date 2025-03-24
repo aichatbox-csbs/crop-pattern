@@ -266,12 +266,21 @@ def display_past_history(crop_name):
         st.dataframe(history_data, width=700)
         
 
-# Streamlit UI with Sidebar Navigation
-st.set_page_config(page_title="Smart Farming Assistant", layout="wide")
-
-st.sidebar.title("🌾 Smart Farming Assistant")
-selected_option = st.sidebar.radio("Navigation", ["Home", "Crop Details", "Past History"])
-
+# Sidebar with box styling and hover effect
+st.sidebar.markdown("""
+    <style>
+        div.stButton > button { width: 100%; }
+        div[data-testid='stSidebar'] div {
+            border-radius: 10px;
+            padding: 10px;
+            background-color: #f0f0f5;
+            transition: 0.3s;
+        }
+        div[data-testid='stSidebar'] div:hover {
+            background-color: #dcdce0;
+        }
+    </style>
+""", unsafe_allow_html=True)
 st.sidebar.markdown("### 🌍 Select a Crop")
 selected_crop = st.sidebar.selectbox("Choose a crop:", list(crops.keys()))
 
@@ -298,3 +307,22 @@ elif selected_option == "Crop Details":
 elif selected_option == "Past History":
     if selected_crop:
         display_past_history(selected_crop)
+
+st.subheader("Past Yields")
+years = np.arange(2015, 2024)
+yields = np.random.randint(50, 150, size=len(years))
+
+fig, ax = plt.subplots()
+ax.plot(years, yields, marker='o', linestyle='-')
+ax.set_xlabel("Year")
+ax.set_ylabel("Yield (tons)")
+ax.set_title("Crop Yield Over the Years")
+st.pyplot(fig)
+
+# Additional Sections (Placeholder)
+st.subheader("Soil Health Prediction")
+st.subheader("Crop Prediction Based on Input Data")
+st.subheader("Displaying Crop Images")
+st.subheader("Providing Steps for Cultivation")
+st.subheader("Showing Past Histories of Crop Cultivation")
+
